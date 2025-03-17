@@ -30,9 +30,17 @@ if st.button("Predict"):
         # Convert input into DataFrame
         input_df = pd.DataFrame([user_input])
 
-        # Encode categorical features
+        # Encode categorical features safely
         for col, le in label_encoders.items():
             if col in input_df:
+                # Convert unknown values to "Unknown"
+                input_df[col] = input_df[col].apply(lambda x: x if x in le.classes_ else "Unknown")
+
+                # If "Unknown" is not in classes, add it dynamically
+                if "Unknown" not in le.classes_:
+                    le.classes_ = np.append(le.classes_, "Unknown")
+
+                # Transform input
                 input_df[col] = le.transform(input_df[col])
 
         # Scale and select features
