@@ -8,7 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from imblearn.over_sampling import SMOTE
 
 # Load dataset
-df = pd.read_csv("data.csv")
+df = pd.read_csv("/content/sample_data/Incident_Event_Log.csv")
 
 # Encode categorical variables
 categorical_cols = df.select_dtypes(include=['object']).columns.tolist()
